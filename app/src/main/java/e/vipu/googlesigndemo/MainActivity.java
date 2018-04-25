@@ -25,7 +25,7 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener,GoogleApiClient.OnConnectionFailedListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final int RC_SIGN_IN = 007;
 
@@ -42,17 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
-        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
-        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
-        llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
-        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
-        txtName = (TextView) findViewById(R.id.txtName);
-        txtEmail = (TextView) findViewById(R.id.txtEmail);
+        initView();
 
-        btnSignIn.setOnClickListener(this);
-        btnSignOut.setOnClickListener(this);
-        btnRevokeAccess.setOnClickListener(this);
+        clickListeners();
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
@@ -68,6 +60,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSignIn.setScopes(gso.getScopeArray());
     }
 
+
+    private void initView() {
+        btnSignIn = (SignInButton) findViewById(R.id.btn_sign_in);
+        btnSignOut = (Button) findViewById(R.id.btn_sign_out);
+        btnRevokeAccess = (Button) findViewById(R.id.btn_revoke_access);
+        llProfileLayout = (LinearLayout) findViewById(R.id.llProfile);
+        imgProfilePic = (ImageView) findViewById(R.id.imgProfilePic);
+        txtName = (TextView) findViewById(R.id.txtName);
+        txtEmail = (TextView) findViewById(R.id.txtEmail);
+    }
+
+    private void clickListeners() {
+        btnSignIn.setOnClickListener(this);
+        btnSignOut.setOnClickListener(this);
+        btnRevokeAccess.setOnClickListener(this);
+
+    }
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
